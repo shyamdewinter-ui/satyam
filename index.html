@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Location Share</title>
+</head>
+<body>
+<h2>Location Sharing</h2>
+<p>अपनी लोकेशन शेयर करने के लिए नीचे बटन दबाएँ।</p>
+<button onclick="shareLocation()">Share My Location</button>
+<p id="status"></p>
+<script>
+function shareLocation() {
+  const status = document.getElementById("status");
+  if (!navigator.geolocation) {
+    status.textContent = "Location supported नहीं है।";
+    return;
+  }
+  status.textContent = "Location permission का इंतज़ार है...";
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      status.innerHTML =
+        'Location प्राप्त हुई: <a target="_blank" href="https://maps.google.com/?q='
+        + lat + ',' + lon + '">Open in Google Maps</a>';
+    },
+    () => {
+      status.textContent = "Location permission नहीं मिली।";
+    }
+  );
+}
+</script>
+</body>
+</html>
